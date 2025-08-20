@@ -1,0 +1,916 @@
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard e Comparativo de Equipamentos LED</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Adicionado Chart.js para renderizar os gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Plugin para exibir os valores nos gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="estilos.css">
+    <link rel="stylesheet" href="animacoes.css">
+    <link rel="stylesheet" href="estilo_dashboard.css">
+    
+
+    <style>
+
+        .card.colorlight-card {
+          
+            border: 1px solid rgba(220, 38, 38, 0.2) !important;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card.colorlight-card:hover {
+           
+            border-color: rgba(220, 38, 38, 0.7) !important;
+            box-shadow: 0 0 15px rgba(220, 38, 38, 0.4) !important;
+        }
+
+       
+        .nav-item a.nav-link.active,
+        .nav-item a.nav-link-parent.active {
+            /* Gradiente de amarelo para rosa */
+            background-image: linear-gradient(90deg, #F59E0B, #EC4899);
+            color: #ffffff;
+            border-radius: 0.5rem; /* Arredondamento suave */
+        }
+        
+        /* Ajuste do hover para o novo estilo */
+        .nav-item a:not(.active):hover {
+            background-color: #262626; /* Cor de fundo para o hover */
+            color: #fff; /* Cor do texto no hover */
+            border-radius: 0.5rem;
+        }
+
+        .nav-link-parent.active .chevron-icon {
+            color: #fff; /* Ícone branco quando o item pai está ativo */
+        }
+        
+        /* Cor de fundo da barra de menu ajustada */
+        #nav-menu {
+            background-color: #111111; /* Cor de fundo do menu */
+            border-right: 1px solid #2e2e2e; /* Borda sutil à direita */
+        }
+
+
+    </style>
+</head>
+<body class="p-4 sm:p-6 md:p-8 text-gray-300 font-inter">
+
+    <!-- Container para as Linhas de Fundo -->
+    <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <div class="decorative-line" id="line-1"></div>
+        <div class="decorative-line" id="line-2"></div>
+        <div class="decorative-line" id="line-3"></div>
+    </div>
+
+    <!-- Conteúdo Principal da Página -->
+    <div class="relative z-10">
+        
+        <!-- NOVO: A barra de cabeçalho fixa e o menu lateral agora são elementos separados -->
+        <!-- Barra de Cabeçalho Fixa -->
+        <header class="fixed-header-bar">
+    <div class="flex items-center gap-4">
+        <!-- Botão do Menu -->
+        <button id="menu-toggle" aria-label="Abrir menu de navegação" class="text-white focus:outline-none">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+        </button>
+        <!-- Logo The Led com ID para animação -->
+        <img src="img/logo_theled.png" id="logo-theled" class="h-8 cursor-pointer" alt="Logo The Led">
+    </div>
+</header>
+
+        <!-- Menu de Navegação Lateral -->
+        <nav id="nav-menu">
+            <!-- NOTA: Removido o nav-scroll-container para simplificar e corrigir o problema -->
+                <!-- Item de Menu para o Dashboard -->
+                <div class="nav-item">
+                     <a href="#" class="nav-link active" data-page="page-dashboard">
+                        <span>Dashboard</span>
+                    </a>
+                </div>
+                <!-- Item de Menu Acordeão para Produtos -->
+                <div class="nav-item">
+                    <a href="#" class="nav-link-parent" data-toggle="submenu-produtos">
+                        <span>Produtos</span>
+                        <svg class="chevron-icon w-5 h-5 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </a>
+                    <div id="submenu-produtos" class="submenu">
+                        <a href="#" class="nav-link" data-page="page-processadoras">Processadoras</a>
+                        <a href="#" class="nav-link" data-page="page-senders">Senders</a>
+                        <a href="#" class="nav-link" data-page="page-receivers">Receivers</a>
+                        <a href="#" class="nav-link" data-page="page-tbs">TBs</a>
+                    </div>
+                </div>
+                <!-- Item de Menu Acordeão para Planos -->
+                <div class="nav-item">
+                    <a href="#" class="nav-link-parent" data-toggle="submenu-planos">
+                        <span>Planos</span>
+                        <svg class="chevron-icon w-5 h-5 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </a>
+                    <div id="submenu-planos" class="submenu">
+                        <a href="#" class="nav-link" data-page="page-implementacao-colorlight">Implementação Colorlight</a>
+                    </div>
+                </div>
+        </nav>
+
+        <!-- Alterado 'pt-20' para 'pt-10' para diminuir o espaçamento no topo -->
+        <main class="pt-10">
+            <!-- Página do Dashboard -->
+            <div id="page-dashboard" class="page active">
+                <div class="max-w-screen-xl mx-auto">
+                    <header class="text-center mb-10">
+                        <!-- Removido a logo daqui, pois agora ela está no cabeçalho fixo -->
+                        <!-- A imagem de fundo da imagem_6ce62a.png vai ser adicionada no CSS -->
+                    </header>
+                    
+                    <!-- Container principal do Dashboard -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                        
+                        <!-- Coluna 1: Gráfico NUCs -->
+                        <div class="chart-container">
+                            <div class="chart-wrapper">
+                                <canvas id="graficoNucs"></canvas>
+                            </div>
+                            <div class="mt-auto pt-4 text-center text-white">
+                                <h4 class="text-lg font-semibold mb-3 border-t border-gray-700 pt-3">Reparos Concluídos</h4>
+                                <div class="flex justify-around">
+                                    <div class="p-2">
+                                        <p class="text-sm text-gray-400">Esta Semana</p>
+                                        <p id="nuc-reparos-semana" class="text-2xl font-bold text-teal-400">0</p>
+                                    </div>
+                                    <div class="p-2">
+                                        <p class="text-sm text-gray-400">Este Mês</p>
+                                        <p id="nuc-reparos-mes" class="text-2xl font-bold text-indigo-400">0</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Coluna 2: Gráfico Totens -->
+                        <div class="chart-container">
+                            <div class="chart-wrapper">
+                                <canvas id="graficoTotems"></canvas>
+                            </div>
+                            <div class="mt-auto pt-4 text-center text-white">
+                                <h4 class="text-lg font-semibold mb-3 border-t border-gray-700 pt-3">Reparos Concluídos</h4>
+                                <div class="flex justify-around">
+                                    <div class="p-2">
+                                        <p class="text-sm text-gray-400">Esta Semana</p>
+                                        <p id="totem-reparos-semana" class="text-2xl font-bold text-teal-400">0</p>
+                                    </div>
+                                    <div class="p-2">
+                                        <p class="text-sm text-gray-400">Este Mês</p>
+                                        <p id="totem-reparos-mes" class="text-2xl font-bold text-indigo-400">0</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Coluna 3: Objetivos e Gráfico de Colunas -->
+                        <div class="flex flex-col gap-8">
+                            <div id="objetivos-container" class="bg-gray-800 bg-opacity-40 p-6 rounded-lg border border-gray-700 backdrop-blur-sm h-full flex flex-col">
+                                <h3 class="text-xl font-bold text-white text-center mb-4 lg:text-left">Objetivos Concluídos</h3>
+                                <ul id="lista-objetivos" class="text-sm text-gray-300 space-y-2 flex-grow">
+                                    <!-- Objetivos serão carregados e criados aqui via JS -->
+                                </uI>
+                                <button id="add-objetivo-btn" class="mt-4 text-xs bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors w-full sm:w-auto">
+                                    Adicionar Objetivo
+                                </button>
+                            </div>
+                            <div class="bg-gray-800 bg-opacity-40 p-6 rounded-lg border border-gray-700 backdrop-blur-sm">
+                                <canvas id="graficoTBsConfiguradas"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Nova linha para os gráficos de rosca adicionais -->
+                    <div class="flex justify-center mt-8">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full lg:w-2/3">
+                            <div class="chart-container" style="min-height: 350px; height: 350px;">
+                                <canvas id="graficoTBs"></canvas>
+                            </div>
+                            <div class="bg-gray-800 bg-opacity-40 p-6 rounded-lg border border-gray-700 backdrop-blur-sm text-white text-center flex flex-col justify-center" style="height: 350px;">
+                                 <h4 class="text-lg font-semibold mb-3">Suporte Prestado</h4>
+                                    <div class="flex justify-around">
+                                        <div class="p-2">
+                                            <p class="text-sm text-gray-400">Esta Semana</p>
+                                            <p id="suporte-semana" class="text-3xl font-bold text-teal-400">0</p>
+                                        </div>
+                                        <div class="p-2">
+                                            <p class="text-sm text-gray-400">Este Mês</p>
+                                            <p id="suporte-mes" class="text-3xl font-bold text-indigo-400">0</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Página de Processadoras -->
+            <div id="page-processadoras" class="page">
+                <div class="max-w-screen-xl mx-auto">
+                    <header class="text-center mb-10">
+                        <!-- Removido a logo daqui -->
+                        <h1 id="processadoras-title" class="text-3xl sm:text-4xl font-bold gradient-text">Processadoras</h1>
+                        <p class="mt-2 text-lg text-gray-400">Excelência técnica de produtos</p>
+                    </header>
+
+                    <!-- FILTRO ALTERADO: Este é o novo código do dropdown -->
+                    <div id="filter-dropdown-container" class="flex justify-center mb-10">
+                        <select id="filter-dropdown" class="p-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm text-gray-300 appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 cursor-pointer">
+                            <option value="all" class="bg-gray-800 text-gray-300">Todos</option>
+                            <option value="cat-2" class="bg-gray-800 text-gray-300">2 Portas</option>
+                            <option value="cat-4" class="bg-gray-800 text-gray-300">4 Portas</option>
+                            <option value="cat-6" class="bg-gray-800 text-gray-300">6 Portas</option>
+                            <option value="cat-8" class="bg-gray-800 text-gray-300">8 Portas</option>
+                            <option value="cat-10" class="bg-gray-800 text-gray-300">10 Portas</option>
+                            <option value="cat-novastar" class="bg-gray-800 text-gray-300">Processadoras Novastar</option>
+                            <option value="cat-colorlight" class="bg-gray-800 text-gray-300">Processadoras Colorlight</option>
+                        </select>
+                    </div>
+
+                    <div id="product-grid" class="flex flex-wrap justify-center -mx-4">
+                        <!-- Cards das processadoras são inseridos aqui via JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Página de Senders -->
+            <div id="page-senders" class="page">
+                 <div class="max-w-screen-xl mx-auto">
+                    <header class="text-center mb-10">
+                        <!-- Removido a logo daqui -->
+                        <h1 id="senders-title" class="text-3xl sm:text-4xl font-bold gradient-text">Senders</h1>
+                        <p class="mt-2 text-lg text-gray-400">Excelência técnica de produtos</p>
+                    </header>
+
+                    <div id="filter-buttons-senders" class="flex justify-center items-center gap-4 mb-10 flex-wrap">
+                        <button class="filter-btn active" data-filter="all">Todos</button>
+                        <button class="filter-btn" data-filter="cat-novastar">Senders Novastar</button>
+                        <button class="filter-btn" data-filter="cat-colorlight">Senders Colorlight</button>
+                    </div>
+
+                    <div id="product-grid-senders" class="flex flex-wrap justify-center -mx-4">
+                        <!-- Cards dos senders são inseridos aqui via JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- NOVA PÁGINA: Receivers -->
+            <div id="page-receivers" class="page">
+                 <div class="max-w-screen-xl mx-auto">
+                    <header class="text-center mb-10">
+                        <!-- Removido a logo daqui -->
+                        <!-- Título da página Receivers -->
+                        <h1 id="receivers-title" class="text-3xl sm:text-4xl font-bold gradient-text">Receivers</h1>
+                        <p class="mt-2 text-lg text-gray-400">Excelência técnica de produtos</p>
+                    </header>
+
+                    <!-- Aqui você pode adicionar filtros específicos para Receivers, se houver -->
+                    <div id="product-grid-receivers" class="flex flex-wrap justify-center -mx-4">
+                        <!-- Cards dos receivers serão inseridos aqui via JS -->
+                        <!-- Lembre-se de criar a lógica em dados.js e no JS principal para popular esta grade -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- NOVA PÁGINA: TBs -->
+            <div id="page-tbs" class="page">
+                 <div class="max-w-screen-xl mx-auto">
+                    <header class="text-center mb-10">
+                        <!-- Removido a logo daqui -->
+                        <!-- Título da página TBs -->
+                        <h1 id="tbs-title" class="text-3xl sm:text-4xl font-bold gradient-text">TBs</h1>
+                        <p class="mt-2 text-lg text-gray-400">Excelência técnica de produtos</p>
+                    </header>
+
+                    <!-- Aqui você pode adicionar filtros específicos para TBs, se houver -->
+                    <div id="product-grid-tbs" class="flex flex-wrap justify-center -mx-4">
+                        <!-- Cards das TBs serão inseridos aqui via JS -->
+                        <!-- Lembre-se de criar a lógica em dados.js e no JS principal para popular esta grade -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Página de Planos (Visão Geral) -->
+            <div id="page-planos" class="page">
+                <div class="max-w-screen-xl mx-auto text-center text-gray-400 py-20 px-6">
+                    <h2 class="text-3xl sm:text-4xl font-bold gradient-text mb-4">Nossos Planos</h2>
+                    <p class="mt-2 text-base">Informações sobre nossos planos e serviços estarão disponíveis aqui em breve.</p>
+                    <p class="mt-2 text-base">Esta seção será dedicada a apresentar as opções de serviços e pacotes.</p>
+                </div>
+            </div>
+
+            <!-- Página de Implementação Colorlight -->
+            <div id="page-implementacao-colorlight" class="page">
+                <div class="max-w-screen-xl mx-auto text-gray-300 py-20 px-6">
+                    <header class="text-center mb-16">
+                        <h2 class="text-3xl sm:text-4xl font-bold gradient-text mb-4">Plano de Implementação Colorlight</h2>
+                        <p class="text-lg text-gray-400">Fases para a adoção e domínio do novo sistema.</p>
+                    </header>
+                    
+                    <div class="timeline-container">
+                        <!-- Estágio 1 -->
+                        <div class="timeline-item timeline-left">
+                            <div class="timeline-content">
+                                <h3 class="timeline-stage">Estágio 1: Estudo de Viabilidade</h3>
+                                <p class="text-gray-400">Foco total no estudo da criação de arquivos RCG e na avaliação do suporte técnico oferecido pela Colorlight para garantir uma base sólida.</p>
+                                <ul class="timeline-details text-gray-300">
+                                    <li><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" /></svg> <span><strong>Responsáveis:</strong> Simão, Daniel</span></li>
+                                    <li><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" /></svg> <span><strong>Duração:</strong> 1 semana</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Estágio 2 -->
+                        <div class="timeline-item timeline-right">
+                            <div class="timeline-content">
+                                <h3 class="timeline-stage">Estágio 2: Treinamento e Avaliação</h3>
+                                <p class="text-gray-400">Capacitar a primeira dupla de técnicos e, a partir dessa experiência, mensurar a curva de aprendizado para otimizar futuros treinamentos.</p>
+                                <ul class="timeline-details text-gray-300">
+                                    <li><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-400" viewBox="0 0 20 20" fill="currentColor"><path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" /></svg> <span><strong>Responsáveis:</strong> Simão, Daniel</span></li>
+                                    <li><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" /></svg> <span><strong>Duração:</strong> 1 semana</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Estágio 3 -->
+                        <div class="timeline-item timeline-left">
+                            <div class="timeline-content">
+                                <h3 class="timeline-stage">Estágio 3: Criação de Documentação</h3>
+                                <p class="text-gray-400">Desenvolver um manual prático e didático, focado em um técnico que nunca utilizou o sistema Colorlight e tem como base o Novastar.</p>
+                                <ul class="timeline-details text-gray-300">
+                                    <li><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-400" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" /><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" /></svg> <span><strong>Responsáveis:</strong> A definir</span></li>
+                                    <li><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" /></svg> <span><strong>Duração:</strong> A definir</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                         <!-- Estágio 4 -->
+                        <div class="timeline-item timeline-right">
+                            <div class="timeline-content">
+                                <h3 class="timeline-stage">Estágio 4: Projeto Piloto</h3>
+                                <p class="text-gray-400">Implementar o sistema Colorlight em um projeto real de pequeno porte em São Paulo para testar o fluxo de trabalho e a documentação em campo.</p>
+                                <ul class="timeline-details text-gray-300">
+                                    <li><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-400" viewBox="0 0 20 20" fill="currentColor"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" /></svg> <span><strong>Responsáveis:</strong> Equipe técnica</span></li>
+                                    <li><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" /></svg> <span><strong>Duração:</strong> A definir</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Barra de Comparação -->
+        <div id="compare-bar">
+            <button id="compare-action-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg transition-colors">
+                Comparar Itens (0)
+            </button>
+            <button id="clear-comparison-btn" title="Limpar Seleção" class="bg-red-600 hover:bg-red-700 text-white font-bold p-2 rounded-full transition-colors">
+                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm4 0a1 1 0 012 0v6a1 1 0 11-2 0V8z" clip-rule="evenodd" />
+                </svg>
+            </button>
+        </div>
+
+        <!-- NOVO: Modal para exibir imagem maior e arquivo técnico -->
+        <div id="image-modal" class="fixed inset-0 bg-black bg-opacity-90 z-50 flex justify-center items-center p-4 hidden">
+            <div class="bg-gray-900 p-8 rounded-lg shadow-lg max-w-4xl w-full relative border border-gray-700" style="max-height: 900px; overflow-y: auto;">
+                <button id="close-image-modal-btn" class="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+                <div class="flex flex-col md:flex-row items-center justify-center gap-6">
+                    <img id="modal-full-image" src="" alt="Imagem do Produto" class="rounded-lg max-h-96 w-auto">
+                </div>
+                <div class="mt-6 text-center">
+                    <button id="technical-file-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg transition-colors">
+                        Ver Arquivo Técnico
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- FIM DO NOVO MODAL DE IMAGEM -->
+
+
+        <!-- NOVO: Modal para exibir produto equivalente -->
+        <div id="product-detail-modal" class="fixed inset-0 bg-black bg-opacity-90 z-50 flex justify-center items-center p-4 hidden">
+            <div class="bg-gray-900 p-8 rounded-lg shadow-lg max-w-4xl w-full relative border border-gray-700" style="max-height: 900px; overflow-y: auto;">
+                <button id="close-detail-modal-btn" class="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+                <!-- Container principal do conteúdo do modal -->
+                <div id="modal-product-content">
+                    <!-- O conteúdo será preenchido dinamicamente pelo JavaScript -->
+                </div>
+            </div>
+        </div>
+        <!-- FIM DO NOVO MODAL -->
+
+        <!-- Tela de Comparação (Modal) -->
+        <div id="comparison-view" class="fixed inset-0 bg-black bg-opacity-90 z-50 flex justify-center items-center p-4 hidden">
+            <div class="max-w-screen-xl mx-auto bg-gray-900 p-8 rounded-lg shadow-lg relative w-full h-full flex flex-col border border-gray-700">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-3xl font-bold gradient-text">Tabela Comparativa</h2>
+                    <button id="close-comparison-btn" class="text-gray-300 hover:text-white transition-colors">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                </div>
+                <div id="comparison-table-container" class="overflow-x-auto flex-grow">
+                    <!-- A tabela será inserida aqui via JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script src="dados.js"></script>
+<!-- Adicionado o script do dashboard -->
+<script src="dashboard.js"></script>
+<script>
+    // A variável 'products' é carregada globalmente a partir de dados.js
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- ELEMENTOS DO DOM ---
+        const body = document.body;
+        const mainContent = document.querySelector('main');
+        const menuToggle = document.getElementById('menu-toggle');
+        const navMenu = document.getElementById('nav-menu');
+        const pages = document.querySelectorAll('.page');
+        const logoTheLed = document.getElementById('logo-theled');
+        
+        const productGridProcessadoras = document.getElementById('product-grid');
+        const processadorasTitle = document.getElementById('processadoras-title');
+        
+        const productGridSenders = document.getElementById('product-grid-senders');
+        const filterButtonsSenders = document.getElementById('filter-buttons-senders');
+        const sendersTitle = document.getElementById('senders-title');
+
+        // Elementos para a página de Receivers
+        const productGridReceivers = document.getElementById('product-grid-receivers');
+        const receiversTitle = document.getElementById('receivers-title');
+
+        // Elementos para a página de TBs
+        const productGridTBs = document.getElementById('product-grid-tbs');
+        const tbsTitle = document.getElementById('tbs-title');
+
+        // NOVO: Elementos do Modal de Detalhes do Produto
+        const productDetailModal = document.getElementById('product-detail-modal');
+        const closeDetailModalBtn = document.getElementById('close-detail-modal-btn');
+        // Removido modalProductName, modalProductImage e modalProductSpecs pois o conteúdo será gerado dinamicamente
+        const modalProductContent = document.getElementById('modal-product-content'); // Novo elemento para o conteúdo
+
+        // NOVO: Elementos do Modal de Imagem e Arquivo Técnico
+        const imageModal = document.getElementById('image-modal');
+        const closeImageModalBtn = document.getElementById('close-image-modal-btn');
+        const modalFullImage = document.getElementById('modal-full-image');
+        const technicalFileBtn = document.getElementById('technical-file-btn');
+
+
+        const compareBar = document.getElementById('compare-bar');
+        const compareBtn = document.getElementById('compare-action-btn');
+        const clearComparisonBtn = document.getElementById('clear-comparison-btn');
+        const comparisonView = document.getElementById('comparison-view');
+        const closeComparisonBtn = document.getElementById('close-comparison-btn');
+        const comparisonTableContainer = document.getElementById('comparison-table-container');
+
+        // --- ESTADO DA APLICAÇÃO ---
+        let selectedForComparison = [];
+
+        // --- FUNÇÕES ---
+        
+        function createProductCardHTML(product) {
+            const productId = product.name.replace(/\s+/g, '-');
+            const specsHtml = product.specs.map(spec => `
+                <li class="flex items-start">
+                    <strong class="w-1/3">${spec.label}:</strong>
+                    <span class="ml-1.5 flex-1">${spec.value}</span>
+                </li>
+            `).join('');
+
+            const imageTag = `<img src="${product.imageSrc}" alt="Imagem de ${product.name}" class="rounded-lg mx-auto h-auto cursor-pointer" style="max-width: 300px;">`;
+
+            // Lógica de classes refeita para maior clareza e robustez.
+            // Garante que 'colorlight-card' seja adicionado a QUALQUER produto colorlight, incluindo receivers.
+            const cardClasses = ['card', 'cursor-pointer'];
+            if (product.type === 'receiver') {
+                cardClasses.push('receiver-card');
+            }
+            if (product.category.includes('cat-colorlight')) {
+                cardClasses.push('colorlight-card');
+            }
+
+            return `
+                <div class="product-item w-full md:w-1/2 xl:w-1/3 px-4 mb-8" data-category="${product.category}">
+                    <div class="${cardClasses.join(' ')}" data-product-name="${product.name}" data-product-type="${product.type}" data-image-src="${product.imageSrc}" data-technical-file-url="${product.technicalFileUrl || ''}">
+                         <div class="absolute top-2 right-2 z-10">
+                            <label for="compare-${productId}" class="compare-checkbox-container flex items-center space-x-2 cursor-pointer p-2 bg-gray-900 bg-opacity-60 rounded-full hover:bg-opacity-80 transition-all" title="Selecionar para comparar">
+                                <input type="checkbox" id="compare-${productId}" data-product-name="${product.name}" class="compare-checkbox h-4 w-4 rounded">
+                            </label>
+                        </div>
+                        <div class="p-6 card-content">
+                            <h2 class="text-2xl font-bold text-gray-100 text-center mb-4">${product.name}</h2>
+                            <div class="mb-4 flex justify-center items-center" style="height: ${product.type === 'receiver' ? '300px' : '150px'};">
+                                ${imageTag}
+                            </div>
+                            <h3 class="font-semibold text-lg mb-3 text-gray-200 border-b border-gray-600 pb-2">Especificações Principais</h3>
+                            <ul class="space-y-3 text-gray-300 text-sm">${specsHtml}</ul>
+                            ${product.recommendation ? `
+                            <div class="mt-6">
+                                <h4 class="font-semibold text-md mb-2 text-gray-200">Recomendação</h4>
+                                <p class="text-sm text-gray-400">${product.recommendation}</p>
+                            </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function initializeGrids() {
+            if (typeof products === 'undefined') {
+                console.error("O banco de dados de produtos (products) não foi encontrado. Verifique se o arquivo dados.js está sendo carregado corretamente.");
+                return;
+            }
+            products.forEach(product => {
+                const cardHTML = createProductCardHTML(product);
+                if (product.type === 'processadora' && productGridProcessadoras) {
+                    productGridProcessadoras.insertAdjacentHTML('beforeend', cardHTML);
+                } else if (product.type === 'sender' && productGridSenders) {
+                    productGridSenders.insertAdjacentHTML('beforeend', cardHTML);
+                } else if (product.type === 'receiver' && productGridReceivers) {
+                    productGridReceivers.insertAdjacentHTML('beforeend', cardHTML);
+                } else if (product.type === 'tbs' && productGridTBs) {
+                    productGridTBs.insertAdjacentHTML('beforeend', cardHTML);
+                }
+            });
+             // Adiciona o listener para o efeito de brilho após os cards serem criados
+            document.querySelectorAll('.card').forEach(card => {
+                card.onmousemove = e => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    card.style.setProperty('--mouse-x', `${x}px`);
+                    card.style.setProperty('--mouse-y', `${y}px`);
+                };
+            });
+        }
+
+        function setupFilter(filterContainer, gridContainer, titleElement, defaultTitle) {
+             if (!filterContainer) return;
+             filterContainer.addEventListener('click', (event) => {
+                const targetButton = event.target.closest('.filter-btn');
+                if (!targetButton) return;
+
+                filterContainer.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+                targetButton.classList.add('active');
+
+                const filter = targetButton.getAttribute('data-filter');
+                if (titleElement) {
+                    titleElement.textContent = targetButton.textContent === 'Todos' ? defaultTitle : targetButton.textContent;
+                }
+                
+                gridContainer.querySelectorAll('.product-item').forEach(item => {
+                    const itemCategories = item.getAttribute('data-category').split(' ');
+                    const shouldBeVisible = (filter === 'all' || itemCategories.includes(filter));
+                    item.classList.toggle('hidden', !shouldBeVisible);
+                });
+            });
+        }
+        
+        // FUNÇÃO ATUALIZADA: para configurar o filtro de dropdown
+        function setupDropdownFilter(dropdownElement, gridContainer, titleElement, defaultTitle) {
+            if (!dropdownElement) return;
+        
+            // Garante que o gradiente esteja presente na inicialização, já que "Todos" é o padrão
+            dropdownElement.classList.add('active-gradient');
+
+            dropdownElement.addEventListener('change', (event) => {
+                const filter = event.target.value; 
+        
+                if (titleElement) {
+                    const selectedOptionText = event.target.options[event.target.selectedIndex].text;
+                    titleElement.textContent = filter === 'all' ? defaultTitle : selectedOptionText;
+                }
+        
+                gridContainer.querySelectorAll('.product-item').forEach(item => {
+                    const itemCategories = item.getAttribute('data-category').split(' ');
+                    const shouldBeVisible = (filter === 'all' || itemCategories.includes(filter));
+                    item.classList.toggle('hidden', !shouldBeVisible);
+                });
+
+                // A classe 'active-gradient' permanece no dropdown, pois ele sempre está em um estado de filtro
+                dropdownElement.classList.add('active-gradient'); 
+            });
+        }
+
+        function updateCompareUI() {
+            const count = selectedForComparison.length;
+            compareBtn.textContent = `Comparar Itens (${count})`;
+            compareBar.classList.toggle('visible', count >= 2);
+        }
+        
+        function renderComparisonTable() {
+            const productsToCompare = products.filter(p => selectedForComparison.includes(p.name));
+            if (productsToCompare.length < 2) return;
+
+            const allSpecLabels = ['Imagem', ...new Set(productsToCompare.flatMap(p => p.specs.map(s => s.label))), 'Ambiente Recomendado'];
+
+            let tableHTML = '<table class="comparison-table">';
+            tableHTML += '<thead><tr><th>Característica</th>';
+            productsToCompare.forEach(p => { tableHTML += `<th>${p.name}</th>`; });
+            tableHTML += '</tr></thead>';
+            tableHTML += '<tbody>';
+            allSpecLabels.forEach(label => {
+                tableHTML += `<tr><td>${label}</td>`;
+                productsToCompare.forEach(product => {
+                    if (label === 'Imagem') {
+                        // A imagem na tabela de comparação não terá borda gradiente por padrão
+                        tableHTML += `<td><img src="${product.imageSrc}" alt="${product.name}" class="rounded-lg mx-auto max-w-[200px]"></td>`;
+                    } else if (label === 'Ambiente Recomendado') {
+                        if (product.recommendation) {
+                            tableHTML += `<td>${product.recommendation}</td>`;
+                        } else {
+                            tableHTML += `<td>—</td>`;
+                        }
+                    } else {
+                        const spec = product.specs.find(s => s.label === label);
+                        tableHTML += `<td>${spec ? spec.value : '—'}</td>`;
+                    }
+                });
+                tableHTML += '</tr>';
+            });
+            tableHTML += '</tbody></table>';
+
+            comparisonTableContainer.innerHTML = tableHTML;
+            document.body.style.overflow = 'hidden';
+            comparisonView.style.display = 'block';
+        }
+
+        // FUNÇÃO ATUALIZADA: para exibir detalhes do produto (e seu equivalente) em um modal
+        function showProductDetails(productName) {
+            const product = products.find(p => p.name === productName);
+            if (!product) return;
+
+            const equivalentProduct = products.find(p => p.name === product.equivalentProduct);
+
+            // Se não houver equivalente, mostra apenas o produto clicado
+            if (!equivalentProduct) {
+                const titleHtml = `<h2 class="text-3xl font-bold gradient-text text-center mb-6">${product.name}</h2>`;
+                const productSpecsHtml = product.specs.map(spec => `
+                    <li class="flex items-start">
+                        <strong class="w-1/3">${spec.label}:</strong>
+                        <span class="ml-1.5 flex-1">${spec.value}</span>
+                    </li>
+                `).join('');
+                const contentHtml = `
+                    <div class="flex flex-col md:flex-row items-start gap-6">
+                        <div class="md:w-1/2 flex justify-center items-center">
+                            <img src="${product.imageSrc}" alt="Imagem de ${product.name}" class="rounded-lg w-full h-auto">
+                        </div>
+                        <div class="md:w-1/2 text-gray-300">
+                            <h3 class="font-semibold text-lg mb-3 text-gray-200 border-b border-gray-600 pb-2">Especificações</h3>
+                            <ul class="space-y-2 text-sm">${productSpecsHtml}</ul>
+                        </div>
+                    </div>
+                `;
+                modalProductContent.innerHTML = titleHtml + contentHtml;
+            } else {
+                // Caso haja um equivalente, mostra ambos lado a lado
+                const titleHtml = `<h2 class="text-3xl font-bold gradient-text text-center mb-6">${product.name} equivalente a ${equivalentProduct.name}</h2>`;
+
+                const productSpecsHtml = product.specs.map(spec => `
+                    <li class="flex items-start">
+                        <strong class="w-1/3">${spec.label}:</strong>
+                        <span class="ml-1.5 flex-1">${spec.value}</span>
+                    </li>
+                `).join('');
+                
+                const equivalentSpecsHtml = equivalentProduct.specs.map(spec => `
+                    <li class="flex items-start">
+                        <strong class="w-1/3">${spec.label}:</strong>
+                        <span class="ml-1.5 flex-1">${spec.value}</span>
+                    </li>
+                `).join('');
+
+                const contentHtml = `
+                    <div class="flex flex-col md:flex-row items-start gap-6">
+                        <!-- Produto Clicado -->
+                        <div class="md:w-1/2 flex flex-col items-center">
+                            <div class="image-wrapper mb-4 w-full flex justify-center items-center">
+                                <!-- Reduzindo o tamanho da imagem -->
+                                <img src="${product.imageSrc}" alt="Imagem de ${product.name}" class="rounded-lg h-auto max-w-[200px]">
+                            </div>
+                            <h3 class="font-semibold text-lg mb-3 text-gray-200 border-b border-gray-600 pb-2">Especificações</h3>
+                            <ul class="space-y-2 text-sm text-gray-300 w-full">${productSpecsHtml}</ul>
+                        </div>
+                        
+                        <!-- Divisor entre as colunas -->
+                        <div class="md:w-px md:h-auto w-full h-px bg-gray-600 md:self-stretch my-4 md:my-0"></div>
+
+                        <!-- Produto Equivalente -->
+                        <div class="md:w-1/2 flex flex-col items-center">
+                            <div class="image-wrapper mb-4 w-full flex justify-center items-center">
+                                <!-- Reduzindo o tamanho da imagem -->
+                                <img src="${equivalentProduct.imageSrc}" alt="Imagem de ${equivalentProduct.name}" class="rounded-lg h-auto max-w-[200px]">
+                            </div>
+                            <h3 class="font-semibold text-lg mb-3 text-gray-200 border-b border-gray-600 pb-2">Especificações</h3>
+                            <ul class="space-y-2 text-sm text-gray-300 w-full">${equivalentSpecsHtml}</ul>
+                        </div>
+                    </div>
+                `;
+
+                modalProductContent.innerHTML = titleHtml + contentHtml;
+            }
+            
+            productDetailModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Evita scroll no body
+        }
+
+        // NOVO: Função para fechar o modal de detalhes do produto
+        function closeProductDetailsModal() {
+            productDetailModal.classList.add('hidden');
+            document.body.style.overflow = ''; // Restaura scroll no body
+            // Limpa o conteúdo dinâmico do modal para a próxima abertura
+            modalProductContent.innerHTML = ''; 
+        }
+
+        // NOVO: Função para abrir o modal da imagem
+        function showImageModal(imageSrc, technicalFileUrl) {
+            modalFullImage.src = imageSrc;
+            imageModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+
+            // Adiciona a funcionalidade de clicar no botão "Ver Arquivo Técnico"
+            if (technicalFileUrl) {
+                technicalFileBtn.style.display = 'block';
+                technicalFileBtn.onclick = () => window.open(technicalFileUrl, '_blank');
+            } else {
+                technicalFileBtn.style.display = 'none';
+            }
+        }
+
+        // NOVO: Função para fechar o modal da imagem
+        function closeImageModal() {
+            imageModal.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+
+        // --- LÓGICA DE EVENTOS ---
+        menuToggle.addEventListener('click', () => {
+            // Alterna a classe 'menu-open' no body
+            body.classList.toggle('menu-open');
+        });
+
+        // Adicionado um listener para a logo para fechar o menu quando clicada
+        logoTheLed.addEventListener('click', () => {
+            body.classList.remove('menu-open');
+        });
+
+        navMenu.addEventListener('click', (e) => {
+            const parentLink = e.target.closest('.nav-link-parent');
+            const pageLink = e.target.closest('.nav-link');
+
+            if (parentLink) {
+                e.preventDefault();
+                const submenuId = parentLink.getAttribute('data-toggle');
+                const submenu = document.getElementById(submenuId);
+                const icon = parentLink.querySelector('.chevron-icon');
+                submenu.classList.toggle('open');
+                parentLink.classList.toggle('active');
+                icon.classList.toggle('rotated');
+                return;
+            }
+
+            if (pageLink) {
+                e.preventDefault();
+                document.querySelectorAll('#nav-menu .nav-link').forEach(l => l.classList.remove('active'));
+                pages.forEach(p => p.classList.remove('active'));
+                const pageId = pageLink.getAttribute('data-page');
+                document.getElementById(pageId).classList.add('active');
+                pageLink.classList.add('active');
+                // Fechando o menu-container ao navegar
+                body.classList.remove('menu-open');
+            }
+        });
+        
+        mainContent.addEventListener('click', (event) => {
+            // VERIFICAÇÃO ADICIONADA: Se o clique foi no contêiner do checkbox,
+            // ignoramos o restante da lógica para não abrir o modal.
+            if (event.target.closest('.compare-checkbox-container')) {
+                return; 
+            }
+
+            // Verifica se o clique foi em um card de produto.
+            const clickedCard = event.target.closest('.card');
+            if (clickedCard) {
+                const productName = clickedCard.dataset.productName;
+                const productType = clickedCard.dataset.productType;
+
+                // Para os "Receivers" abre o modal de detalhes do produto.
+                if (productType === 'receiver') {
+                    showProductDetails(productName);
+                    return;
+                }
+                
+                // Para todos os outros tipos, abre o modal de imagem.
+                const imageSrc = clickedCard.dataset.imageSrc;
+                const technicalFileUrl = clickedCard.dataset.technicalFileUrl;
+                showImageModal(imageSrc, technicalFileUrl);
+            }
+        });
+
+
+        closeImageModalBtn.addEventListener('click', closeImageModal);
+
+
+        mainContent.addEventListener('change', (event) => {
+            if (event.target.classList.contains('compare-checkbox')) {
+                const checkbox = event.target;
+                const productName = checkbox.dataset.productName;
+                const clickedCard = checkbox.closest('.card');
+                if (!clickedCard) return;
+
+                const clickedProduct = products.find(p => p.name === productName);
+                if (!clickedProduct) return;
+                
+                const clickedProductType = clickedProduct.type;
+
+                if (checkbox.checked) {
+                    // Verifica se já existem itens selecionados e se são de uma categoria diferente.
+                    if (selectedForComparison.length > 0) {
+                        const firstSelectedName = selectedForComparison[0];
+                        const firstSelectedProduct = products.find(p => p.name === firstSelectedName);
+                        
+                        if (firstSelectedProduct && firstSelectedProduct.type !== clickedProductType) {
+                            // Se as categorias forem diferentes, limpa a seleção antiga.
+                            // Desmarca todos os outros checkboxes.
+                            document.querySelectorAll('.compare-checkbox:checked').forEach(cb => {
+                                if (cb !== checkbox) {
+                                    cb.checked = false;
+                                }
+                            });
+                            // Limpa o array de comparação.
+                            selectedForComparison = [];
+                        }
+                    }
+                    
+                    // Adiciona o novo item à lista (que pode ter sido limpa).
+                    if (!selectedForComparison.includes(productName)) {
+                        selectedForComparison.push(productName);
+                    }
+                } else {
+                    // Remove o item se for desmarcado.
+                    selectedForComparison = selectedForComparison.filter(name => name !== productName);
+                }
+                
+                updateCompareUI();
+            }
+        });
+
+        // Listener para fechar o modal de detalhes do produto
+        closeDetailModalBtn.addEventListener('click', closeProductDetailsModal);
+
+
+        compareBtn.addEventListener('click', renderComparisonTable);
+        
+        closeComparisonBtn.addEventListener('click', () => {
+            comparisonView.style.display = 'none';
+            document.body.style.overflow = '';
+        });
+        
+        clearComparisonBtn.addEventListener('click', () => {
+            selectedForComparison = [];
+            document.querySelectorAll('.compare-checkbox:checked').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            updateCompareUI();
+        });
+
+        // --- INICIALIZAÇÃO ---
+        initializeGrids();
+        
+        // Chamada de inicialização para o filtro de Senders (sem alteração)
+        setupFilter(filterButtonsSenders, productGridSenders, sendersTitle, 'Senders');
+        
+        // Chamada de inicialização para o NOVO filtro de Processadoras
+        // Seleciona o elemento dropdown
+        const filterDropdownProcessadoras = document.getElementById('filter-dropdown');
+        // Chama a nova função de filtro, passando o dropdown como argumento
+        setupDropdownFilter(filterDropdownProcessadoras, productGridProcessadoras, processadorasTitle, 'Processadoras');
+        
+        // Abre o submenu de Produtos por padrão
+        const initialSubmenu = document.getElementById('submenu-produtos');
+        const initialParent = document.querySelector('[data-toggle="submenu-produtos"]');
+        if (initialSubmenu && initialParent) {
+            // Não abre mais o submenu por padrão para dar foco ao dashboard
+            // initialSubmenu.classList.add('open');
+            // initialParent.classList.add('active');
+            // initialIcon.classList.add('rotated');
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,320 @@
+/* --- AJUSTES PARA A LOGO --- */
+
+/*
+  Adicione a classe "logo-sender" à sua tag <img> da logo no seu arquivo HTML.
+  Exemplo: <img src="caminho/para/sua/logo.png" alt="Logo Sender S2" class="logo-sender">
+
+  Você pode ajustar o valor de 'max-width' para deixar a logo maior ou menor.
+*/
+.logo-sender {
+    max-width: 180px; /* Largura máxima da logo */
+    height: auto;     /* Mantém a proporção da imagem */
+    display: block;   /* Garante um bom comportamento de layout */
+    margin: 1rem auto;/* Centraliza a logo e adiciona um espaçamento */
+}
+
+/* --- FIM DOS AJUSTES PARA A LOGO --- */
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #000000; /* Alterado para preto */
+    background-size: cover;
+    /* --- MUDANÇA PARA O FUNDO FIXO --- */
+    background-attachment: fixed;
+    /* --- FIM DA MUDANÇA --- */
+    position: relative;
+    overflow-x: hidden;
+    padding-top: 6rem; /* Adiciona padding no topo para o cabeçalho fixo */
+    transition: transform 0.3s ease-in-out; /* Adiciona a transição ao body */
+}
+
+/* A transformação do body foi removida para que a barra de rolagem não seja empurrada */
+/* body.menu-open {
+    transform: translateX(280px);
+} */
+
+/* Adicionado o estilo para o conteúdo principal e cabeçalho */
+main, .fixed-header-bar {
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Quando o menu está aberto, o conteúdo principal e o cabeçalho são empurrados */
+body.menu-open main, body.menu-open .fixed-header-bar {
+    transform: translateX(280px);
+}
+
+.card {
+    background-color: #1f2937; /* gray-800 */
+    border-radius: 0.75rem;
+    border: 1px solid #374151; /* gray-700 */
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, border-color 0.2s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    border-color: #818cf8; /* indigo-400 */
+}
+.card-content {
+    flex-grow: 1;
+}
+.gradient-text {
+    background: linear-gradient(to right, #fde047, #f59e0b, #a855f7, #d946ef, #ec4899);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+}
+.filter-btn {
+    padding: 0.5rem 1.5rem;
+    border-radius: 9999px;
+    font-weight: 500;
+    color: #d1d5db; 
+    background-color: #374151; 
+    transition: all 0.2s ease-in-out;
+    border: 2px solid transparent;
+}
+.filter-btn:hover {
+    background-color: #4b5563; 
+    color: #fff;
+}
+.filter-btn.active {
+    color: #fff;
+    background-image: linear-gradient(to right, #1f2937, #1f2937), linear-gradient(to right, #fde047, #f59e0b, #d946ef, #ec4899);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    border: 2px solid transparent;
+}
+.fixed-header-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    background-color: rgba(17, 24, 39, 0.1); /* Fundo transparente */
+    backdrop-filter: blur(10px);
+    padding: 0.2rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    display: flex; /* Ativa o flexbox */
+    align-items: center;
+    justify-content: space-between; /* Espaça a logo e o botão */
+}
+#menu-toggle {
+    position: relative;
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0.75rem;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+    display: block; 
+}
+#nav-menu {
+    position: fixed; 
+    top: 0; 
+    left: -280px; 
+    width: 280px;
+    height: 100vh; /* Altura total da janela */
+    background-color: #111827;
+    border-right: 1px solid #374151;
+    transition: transform 0.3s ease-in-out;
+    z-index: 100; 
+    padding-top: 6rem; /* abeçalho fixo */
+    overflow-y: auto; /* rolagem para o menu POHHAA */
+}
+
+/* A barra lateral*/
+body.menu-open #nav-menu {
+    transform: translateX(280px);
+}
+.nav-item {
+    border-bottom: 1px solid #1f2937; /* gray-800 */
+}
+.nav-link, .nav-link-parent {
+    display: block;
+    padding: 1rem 2rem;
+    color: #d1d5db;
+    font-size: 1.125rem;
+    transition: background-color 0.2s, color 0.2s;
+}
+.nav-link:hover, .nav-link-parent:hover {
+    background-color: #374151;
+    color: #fff;
+}
+.nav-link.active {
+    background-color: #4f46e5;
+    color: #fff;
+}
+.nav-link-parent {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.nav-link-parent.active {
+    background-color: #374151;
+}
+.chevron-icon {
+    transition: transform 0.3s ease-in-out;
+}
+.chevron-icon.rotated {
+    transform: rotate(180deg);
+}
+.submenu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+    background-color: #0c111c;
+}
+.submenu.open {
+    max-height: 300px;
+}
+.submenu .nav-link {
+    padding-left: 3rem;
+    font-size: 1rem;
+}
+.page {
+    display: none;
+}
+.page.active {
+    display: block;
+}
+.product-item {
+    transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+}
+.product-item.hidden {
+    opacity: 0;
+    transform: scale(0.9);
+    height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    overflow: hidden;
+    transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out,
+                height 0s 0.4s, padding 0s 0.4s, margin 0s 0.4s;
+}
+#compare-bar {
+    position: fixed;
+    bottom: -150px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #111827;
+    padding: 1rem 1.5rem;
+    border-radius: 0.75rem 0.75rem 0 0;
+    box-shadow: 0 -5px 15px rgba(0,0,0,0.3);
+    transition: bottom 0.3s ease-in-out;
+    z-index: 110;
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+#compare-bar.visible {
+    bottom: 0;
+}
+#comparison-view {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 120;
+    overflow-y: auto;
+    padding: 2rem;
+}
+.comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #d1d5db;
+}
+.comparison-table th, .comparison-table td {
+    border: 1px solid #374151;
+    padding: 1rem;
+    text-align: left;
+    vertical-align: top;
+    transition: background-color 0.2s;
+}
+.comparison-table th {
+    background-color: #1f2937;
+    font-weight: bold;
+}
+.comparison-table tr:nth-child(even) {
+    background-color: #1f2937;
+}
+.comparison-table tr:nth-child(odd) {
+    background-color: #111827;
+}
+.comparison-table th:first-child, .comparison-table td:first-child {
+    font-weight: 600;
+    position: sticky;
+    left: 0;
+    z-index: 10;
+}
+.comparison-table th:first-child {
+     background-color: #374151;
+}
+.comparison-table tr:nth-child(even) td:first-child {
+    background-color: #2b3544;
+}
+.comparison-table tr:nth-child(odd) td:first-child {
+    background-color: #1a2230;
+}
+.compare-checkbox {
+    accent-color: #818cf8;
+}
+
+.decorative-line {
+    
+    position: fixed;
+    left: -5%;
+    width: 110%;
+    height: 4px;
+    background: linear-gradient(to right, #fde047, #f59e0b, #a855f7, #d946ef, #ec4899);
+    opacity: 0.4;
+}
+#line-1 {
+    top: 20%;
+    transform: rotate(-4deg);
+}
+#line-2 {
+    top: 70%;
+    transform: rotate(3deg);
+}
+#line-3 {
+    top: 95%;
+    transform: rotate(-2deg);
+}
+
+/* Removido: Contorno Gradiente para Imagens de Produto (conforme sua correção) */
+/* .product-image-gradient-border {
+    border-radius: 0.75rem;
+    padding: 3px;
+    background: linear-gradient(to right, #fde047, #f59e0b, #d946ef, #ec4899);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    transition: all 0.3s ease-in-out;
+} */
+
+/* Removido: Efeito de brilho ao passar o mouse para imagens de produto */
+/* .product-image-gradient-border:hover {
+    box-shadow: 0 0 20px rgba(253, 224, 71, 0.6),
+                0 0 20px rgba(245, 158, 11, 0.6),
+                0 0 20px rgba(217, 70, 239, 0.6),
+                0 0 20px rgba(236, 72, 153, 0.6);
+} */
+
+/* NOVO ESTILO: Contorno Gradiente para o Dropdown de Filtro quando ativo */
+#filter-dropdown.active-gradient {
+    border: 2px solid transparent; /* Remove a borda padrão */
+    background-image: linear-gradient(to right, #1f2937, #1f2937), linear-gradient(to right, #fde047, #f59e0b, #d946ef, #ec4899);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    /* Adiciona um brilho sutil para destacar */
+    box-shadow: 0 0 10px rgba(253, 224, 71, 0.4);
+    transition: all 0.3s ease-in-out;
+}
