@@ -1,7 +1,6 @@
-// --- BANCO DE DADOS DOS PRODUTOS ---
-// A lista de produtos é agora uma variável global.
+
 const products = [
-    // Processadoras
+
     { name: "NovaStar VC2", type: "processadora", category: "cat-2 cat-novastar", imageSrc: "img/VC2.png", 
         specs: [ 
             { label: "Sistema", value: "Nova Star" },
@@ -14,7 +13,7 @@ const products = [
             { label: "Consumo", value: "12W" }
         ], 
         recommendation: "Instalações fixas e eventos de pequeno porte como lojas, hotéis e salas de reunião, onde a versatilidade de entradas são essenciais.",
-        technicalFileUrl: "pdfs/VC2.pdf" // Placeholder para o arquivo técnico
+        technicalFileUrl: "pdfs/VC2.pdf" 
     },
     { name: "Colorlight X2s", type: "processadora", category: "cat-2 cat-colorlight", imageSrc: "img/X2s.png", 
         specs: [ 
@@ -29,7 +28,7 @@ const products = [
             { label: "Consumo", value: "10W" }
         ], 
         recommendation: "Instalações fixas.",
-        technicalFileUrl: "pdfs/x2s.pdf" // Placeholder para o arquivo técnico
+        technicalFileUrl: "pdfs/x2s.pdf" 
     },
     { name: "Colorlight X2m", type: "processadora", category: "cat-2 cat-colorlight", imageSrc: "img/X2m.png", 
         specs: [ 
@@ -44,7 +43,7 @@ const products = [
             { label: "Consumo", value: "10W" }
         ], 
         recommendation: "Instalações fixas de pequeno a médio porte que necessitam de uma ampla gama de entradas, incluindo analógicas, e reprodução via USB.",
-        technicalFileUrl: "pdfs/x2m.pdf" // Placeholder para o arquivo técnico
+        technicalFileUrl: "pdfs/x2m.pdf" 
     },
     { name: "NovaStar VC4", type: "processadora", category: "cat-4 cat-novastar", imageSrc: "img/VC4.png", 
         specs: [
@@ -58,7 +57,7 @@ const products = [
             { label: "Consumo", value: "25W" }
         ], 
         recommendation: "Instalações comerciais de médio porte, como fachadas de lojas, estúdios de TV e centros de exibição que exigem maior capacidade de pixels.",
-        technicalFileUrl: "pdfs/vc4.pdf" // Placeholder para o arquivo técnico
+        technicalFileUrl: "pdfs/vc4.pdf" 
     },
     { name: "NovaStar VX400", type: "processadora", category: "cat-4 cat-novastar", imageSrc: "img/VX400.png", 
         specs: [ 
@@ -73,7 +72,7 @@ const products = [
         { label: "Consumo", value: "28W" }
         ], 
         recommendation: "Projetos que exigem múltiplas fontes de vídeo, incluindo entradas analógicas e digitais, e a funcionalidade PIP para exibir duas fontes simultaneamente.",
-        technicalFileUrl: "pdfs/VX400.pdf" // Placeholder para o arquivo técnico
+        technicalFileUrl: "pdfs/VX400.pdf" 
     },    
     { name: "NovaStar VX400s", type: "processadora", category: "cat-4 cat-novastar", imageSrc: "img/VX400s.png", 
         specs: [ 
@@ -88,7 +87,7 @@ const products = [
             { label: "Consumo", value: "25W" }
         ], 
         recommendation: "Projetos que exigem múltiplas fontes de vídeo, incluindo entradas analógicas e digitais, e a funcionalidade PIP para exibir duas fontes simultaneamente.",
-        technicalFileUrl: "pdfs/vx400s.pdf" // Placeholder para o arquivo técnico
+        technicalFileUrl: "pdfs/vx400s.pdf" 
     },
     { name: "Colorlight X4s", type: "processadora", category: "cat-4 cat-colorlight", imageSrc: "img/X4s.png", 
         specs: [ 
@@ -103,7 +102,7 @@ const products = [
             { label: "Consumo", value: "10W" }
         ], 
         recommendation: "Instalações fixa, ideal para telas mais largas ou com formatos customizados que demandam mais saídas.",
-        technicalFileUrl: "pdfs/x4s.pdf" // Placeholder para o arquivo técnico
+        technicalFileUrl: "pdfs/x4s.pdf" 
     },
     { name: "Colorlight X4m", type: "processadora", category: "cat-4 cat-colorlight", imageSrc: "img/x4m.png", 
         specs: [ 
@@ -118,7 +117,7 @@ const products = [
             { label: "Consumo", value: "10W" }
         ], 
         recommendation: "Eventos, oferecendo controle flexível e exibição de imagem de alta qualidade com uma vasta gama de entradas.",
-        technicalFileUrl: "pdfs/x4m.pdf" // Placeholder para o arquivo técnico
+        technicalFileUrl: "pdfs/x4m.pdf" 
     },
     { name: "Colorlight X4e", type: "processadora", category: "cat-4 cat-colorlight", imageSrc: "img/X4e.png", 
         specs: [ 
@@ -133,7 +132,7 @@ const products = [
             { label: "Consumo", value: "20W" }
         ], 
         recommendation: "Estudios, broadcast e ambientes que necessitam de sincronismo de sinal (Genlock) e fontes de vídeo profissionais como SDI e DP.",
-        technicalFileUrl: "pdfs/x4e.pdf" // Placeholder para o arquivo técnico
+        technicalFileUrl: "pdfs/x4e.pdf" 
     },
     { name: "NovaStar VC6", type: "processadora", category: "cat-6 cat-novastar", imageSrc: "img/VC6.png", 
         specs: [ 
@@ -148,7 +147,7 @@ const products = [
             { label: "Consumo", value: "28W" }
         ], 
         recommendation: "Broadcast, estúdios virtuais e grandes instalações fixas que demandam múltiplas camadas de vídeo e entrada SDI.",
-        technicalFileUrl: "pdfs/vc6.pdf" // Placeholder para o arquivo técnico
+        technicalFileUrl: "pdfs/vc6.pdf" 
     },
       {
         name: "NovaStar VX600",
@@ -167,7 +166,7 @@ const products = [
             { label: "Consumo", value: "28W" }
         ],
         recommendation: "Ideal para telas LED de grande formato (ultra-wide e ultra-high) e sistemas de controle de palco que exigem alta capacidade de pixels e múltiplas opções de entrada e saída.",
-        technicalFileUrl: "pdfs/vx600.pdf" // Placeholder para o arquivo técnico
+        technicalFileUrl: "pdfs/vx600.pdf" 
     },
     { name: "Colorlight X6", type: "processadora", category: "cat-6 cat-colorlight", imageSrc: "img/X6.png", 
         specs: [ 
@@ -182,7 +181,7 @@ const products = [
             { label: "Consumo", value: "30W" }
         ], 
         recommendation: "Locação, grandes shows e eventos complexos que exigem máxima flexibilidade com múltiplos layers e troca de fontes sem cortes.",
-        technicalFileUrl: "pdfs/x6.pdf" // Placeholder para o arquivo técnico
+        technicalFileUrl: "pdfs/x6.pdf" 
     },
     { name: "Colorlight X7", type: "processadora", category: "cat-8 cat-colorlight", imageSrc: "img/X7.png", 
         specs: [ 
@@ -197,7 +196,7 @@ const products = [
             { label: "Consumo", value: "30W" }
         ], 
         recommendation: "",
-        technicalFileUrl: "pdfs/X7.pdf" // Placeholder para o arquivo técnico
+        technicalFileUrl: "pdfs/X7.pdf" 
     },
         { name: "Colorlight X8E", type: "processadora", category: "cat-8 cat-colorlight", imageSrc: "img/X8E.png", 
         specs: [ 
@@ -212,7 +211,7 @@ const products = [
             { label: "Consumo", value: "50W" }
         ], 
         recommendation: "",
-        technicalFileUrl: "pdfs/X8E.pdf" // Placeholder para o arquivo técnico
+        technicalFileUrl: "pdfs/X8E.pdf" 
     },
 
     { name: "NovaStar VC10", type: "processadora", category: "cat-10 cat-novastar", imageSrc: "img/VC10.png", 
@@ -228,7 +227,7 @@ const products = [
             { label: "Consumo", value: "28W" }
         ], 
         recommendation: "Instalações fixas de porte, centros de comando e salas de conferência que necessitam de alta capacidade de processamento 4K.",
-        technicalFileUrl: "pdfs/vc10.pdf" // Placeholder para o arquivo técnico
+        technicalFileUrl: "pdfs/vc10.pdf" 
     },
     {
         name: "NovaStar VX1000",
@@ -247,7 +246,7 @@ const products = [
             { label: "Consumo", value: "28W" }
         ],
         recommendation: "Ideal para telas LED ultra-wide e ultra-high, sistemas de controle de palco de alta capacidade e aplicações que exigem processamento 4Kx1K@60Hz e múltiplas opções de entrada e saída, incluindo fibra.",
-        technicalFileUrl: "pdfs/vx1000.pdf" // Placeholder para o arquivo técnico
+        technicalFileUrl: "pdfs/vx1000.pdf"
     },
     { name: "Colorlight VX10", type: "processadora", category: "cat-10 cat-colorlight", imageSrc: "img/VX10.png", 
         specs: [ 
@@ -262,9 +261,8 @@ const products = [
             { label: "Consumo", value: "75W" }
         ], 
         recommendation: "Locação de alto padrão, palcos, broadcast e filmagens, onde entradas 4K reais, HDR e saídas de fibra são necessarias.",
-        technicalFileUrl: "pdfs/vx10.pdf" // Placeholder para o arquivo técnico
+        technicalFileUrl: "pdfs/vx10.pdf" 
     },
-    // Senders
     { name: "NovaStar MCTRL300", type: "sender", category: "cat-sender cat-novastar", imageSrc: "img/MCTRL300.png", 
         specs: [ 
             { label: "Sistema", value: "Nova Star" },
@@ -275,9 +273,9 @@ const products = [
             { label: "Entrada Customizável", value: "Sim" }, 
             { label: "Dimensões", value: "204.0 x 160.0 x 48.0 mm" } 
         ],
-        technicalFileUrl: "pdfs/MCTRL300.pdf" // Adicionando a propriedade com um valor vazio
+        technicalFileUrl: "pdfs/MCTRL300.pdf"
     },
-    // Bloco Corrigido
+  
     { name: "Colorlight S2", type: "sender", category: "cat-sender cat-colorlight", imageSrc: "img/S2.png", 
         specs: [ 
             { label: "Sistema", value: "Colorlight" },
@@ -288,7 +286,7 @@ const products = [
             { label: "Entrada Customizável", value: "Sim" }, 
             { label: "Dimensões", value: "275 x 198 x 44 mm" } 
         ],
-        technicalFileUrl: "pdfs/S2.pdf" // Adicionando a propriedade com um valor vazio
+        technicalFileUrl: "pdfs/S2.pdf" 
     },
     { name: "NovaStar MCTRL600", type: "sender", category: "cat-sender cat-novastar", imageSrc: "img/MCTRL600.png", 
         specs: [ 
@@ -300,7 +298,7 @@ const products = [
             { label: "Entrada Customizável", value: "Sim" }, 
             { label: "Dimensões", value: "482.0 x 268.5 x 44.4 mm" } 
         ],
-        technicalFileUrl: "pdfs/MCTRL600.pdf" // Adicionando a propriedade com um valor vazio
+        technicalFileUrl: "pdfs/MCTRL600.pdf" 
     },
     { name: "Colorlight S4", type: "sender", category: "cat-sender cat-colorlight", imageSrc: "img/S4.png", 
         specs: [ 
@@ -312,9 +310,9 @@ const products = [
             { label: "Entrada Customizável", value: "Sim" }, 
             { label: "Dimensões", value: "482.6 x 240 x 44 mm" } 
         ],
-        technicalFileUrl: "pdfs/S4.pdf" // Adicionando a propriedade com um valor vazio
+        technicalFileUrl: "pdfs/S4.pdf" 
     },
-     // Receivers
+
     { 
         name: "Colorlight 5A-75B", 
         type: "receiver", 
@@ -330,15 +328,15 @@ const products = [
             { label: "Taxa de quadros", value: "Até 60Hz, e imagens de alta taxa de quadros de 120/240Hz"},
 
         ],
-        // Vincula ao Receiver B
+     
         equivalentProduct: "NovaStar MRV 208-1",
-        technicalFileUrl: "" // Adicionando a propriedade com um valor vazio
+        technicalFileUrl: "" 
     },
     { 
         name: "NovaStar MRV 208-1", 
         type: "receiver", 
         category: "cat-receiver cat-marca-b", 
-        imageSrc: "img/MRV208-1.png", // Deixe vazio para preencher depois
+        imageSrc: "img/MRV208-1.png", 
         specs: [ 
             { label: "Sistema", value: "NovaStar" },
             { label: "Portas", value: "8 conectores HUB75E padrão" }, 
@@ -349,15 +347,15 @@ const products = [
             { label: "Taxa de quadros", value: "Até 60Hz"},
             
         ],
-        // Vincula ao Receiver A
+      
         equivalentProduct: "Colorlight 5A-75B",
-        technicalFileUrl: "" // Adicionando a propriedade com um valor vazio
+        technicalFileUrl: "" 
     },
     { 
         name: "NovaStar MRV 412-N", 
         type: "receiver", 
         category: "cat-receiver cat-marca-b", 
-        imageSrc: "img/MRV412-N.png", // Deixe vazio para preencher depois
+        imageSrc: "img/MRV412-N.png", 
         specs: [ 
             { label: "Sistema", value: "NovaStar" },
             { label: "Portas", value: "12 conectores HUB75E padrão" }, 
@@ -368,15 +366,15 @@ const products = [
             { label: "Taxa de quadros", value: "Até 60Hz"},
             
         ],
-        // Vincula ao Receiver A
+  
         equivalentProduct: "Colorlight E120",
-        technicalFileUrl: "" // Adicionando a propriedade com um valor vazio
+        technicalFileUrl: ""
     },
     { 
         name: "Colorlight E120", 
         type: "receiver", 
         category: "cat-receiver cat-marca-b", 
-        imageSrc: "img/E120.png", // Deixe vazio para preencher depois
+        imageSrc: "img/E120.png", 
         specs: [ 
             { label: "Sistema", value: "Colorlight" },
             { label: "Portas", value: "12 conectores HUB75E padrão" }, 
@@ -429,7 +427,7 @@ const products = [
         technicalFileUrl: "" 
             
     },
-    // Aqui você pode adicionar as TBs, se houver
+ 
     { 
         name: "TB2", 
         type: "tbs", 
@@ -491,6 +489,7 @@ const products = [
         ],
         technicalFileUrl: "pdfs/TB50.pdf"
     },
+
 
 
 
