@@ -1,7 +1,6 @@
-// Aguarda o carregamento completo do conteúdo da página antes de executar o script.
+
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- PALETA DE CORES PADRONIZADA ---
     const paletaCores = {
         principal: 'rgba(139, 92, 246, 0.85)',
         secundaria: 'rgba(20, 184, 166, 0.85)',
@@ -16,7 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
 
-    // --- DADOS PARA OS GRÁFICOS ---
     const dadosNucs = {
         labels: ['Reparados', 'Sem reparo'],
         datasets: [{
@@ -59,14 +57,13 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
 
-    // --- DADOS DOS CONTADORES ---
     const dadosContadores = {
         nucs: { semana: 40, mes: 100 },
         totems: { semana: 3, mes: 3 },
         suporte: { semana: 8, mes: 12 }
     };
 
-    // --- CONFIGURAÇÕES DOS GRÁFICOS ---
+
     const configGraficoRosca = (dados) => ({
         type: 'doughnut', data: dados,
         options: {
@@ -109,7 +106,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- ATUALIZAÇÃO DOS CONTADORES ---
     function atualizarContadores() {
         document.getElementById('nuc-reparos-semana').textContent = dadosContadores.nucs.semana;
         document.getElementById('nuc-reparos-mes').textContent = dadosContadores.nucs.mes;
@@ -127,7 +123,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     atualizarContadores();
 
-    // --- LÓGICA DOS OBJETIVOS CONCLUÍDOS ---
     const listaObjetivos = document.getElementById('lista-objetivos');
     const addObjetivoBtn = document.getElementById('add-objetivo-btn');
 
@@ -184,3 +179,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loadObjectives();
 });
+
