@@ -1,52 +1,37 @@
-/* --- AJUSTES PARA A LOGO --- */
 
-/*
-  Adicione a classe "logo-sender" à sua tag <img> da logo no seu arquivo HTML.
-  Exemplo: <img src="caminho/para/sua/logo.png" alt="Logo Sender S2" class="logo-sender">
-
-  Você pode ajustar o valor de 'max-width' para deixar a logo maior ou menor.
-*/
 .logo-sender {
-    max-width: 180px; /* Largura máxima da logo */
-    height: auto;     /* Mantém a proporção da imagem */
-    display: block;   /* Garante um bom comportamento de layout */
-    margin: 1rem auto;/* Centraliza a logo e adiciona um espaçamento */
+    max-width: 180px; 
+    height: auto;  
+    display: block; 
+    margin: 1rem auto;
 }
 
-/* --- FIM DOS AJUSTES PARA A LOGO --- */
 
 body {
     font-family: 'Inter', sans-serif;
-    background-color: #000000; /* Alterado para preto */
+    background-color: #000000; 
     background-size: cover;
-    /* --- MUDANÇA PARA O FUNDO FIXO --- */
+
     background-attachment: fixed;
-    /* --- FIM DA MUDANÇA --- */
+  
     position: relative;
     overflow-x: hidden;
-    padding-top: 6rem; /* Adiciona padding no topo para o cabeçalho fixo */
-    transition: transform 0.3s ease-in-out; /* Adiciona a transição ao body */
+    padding-top: 6rem; /
+    transition: transform 0.3s ease-in-out; 
 }
-
-/* A transformação do body foi removida para que a barra de rolagem não seja empurrada */
-/* body.menu-open {
-    transform: translateX(280px);
-} */
-
-/* Adicionado o estilo para o conteúdo principal e cabeçalho */
 main, .fixed-header-bar {
     transition: transform 0.3s ease-in-out;
 }
 
-/* Quando o menu está aberto, o conteúdo principal e o cabeçalho são empurrados */
+
 body.menu-open main, body.menu-open .fixed-header-bar {
     transform: translateX(280px);
 }
 
 .card {
-    background-color: #1f2937; /* gray-800 */
+    background-color: #1f2937; 
     border-radius: 0.75rem;
-    border: 1px solid #374151; /* gray-700 */
+    border: 1px solid #374151; 
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, border-color 0.2s ease-in-out;
     display: flex;
@@ -57,7 +42,7 @@ body.menu-open main, body.menu-open .fixed-header-bar {
 .card:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-    border-color: #818cf8; /* indigo-400 */
+    border-color: #818cf8; 
 }
 .card-content {
     flex-grow: 1;
@@ -95,13 +80,13 @@ body.menu-open main, body.menu-open .fixed-header-bar {
     left: 0;
     width: 100%;
     z-index: 100;
-    background-color: rgba(17, 24, 39, 0.1); /* Fundo transparente */
+    background-color: rgba(17, 24, 39, 0.1); 
     backdrop-filter: blur(10px);
     padding: 0.2rem;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    display: flex; /* Ativa o flexbox */
+    display: flex; 
     align-items: center;
-    justify-content: space-between; /* Espaça a logo e o botão */
+    justify-content: space-between; 
 }
 #menu-toggle {
     position: relative;
@@ -118,21 +103,21 @@ body.menu-open main, body.menu-open .fixed-header-bar {
     top: 0; 
     left: -280px; 
     width: 280px;
-    height: 100vh; /* Altura total da janela */
+    height: 100vh; 
     background-color: #111827;
     border-right: 1px solid #374151;
     transition: transform 0.3s ease-in-out;
     z-index: 100; 
-    padding-top: 6rem; /* abeçalho fixo */
-    overflow-y: auto; /* rolagem para o menu POHHAA */
+    padding-top: 6rem; 
+    overflow-y: auto; 
 }
 
-/* A barra lateral*/
+
 body.menu-open #nav-menu {
     transform: translateX(280px);
 }
 .nav-item {
-    border-bottom: 1px solid #1f2937; /* gray-800 */
+    border-bottom: 1px solid #1f2937; 
 }
 .nav-link, .nav-link-parent {
     display: block;
@@ -290,31 +275,12 @@ body.menu-open #nav-menu {
     transform: rotate(-2deg);
 }
 
-/* Removido: Contorno Gradiente para Imagens de Produto (conforme sua correção) */
-/* .product-image-gradient-border {
-    border-radius: 0.75rem;
-    padding: 3px;
-    background: linear-gradient(to right, #fde047, #f59e0b, #d946ef, #ec4899);
-    background-origin: border-box;
-    background-clip: content-box, border-box;
-    transition: all 0.3s ease-in-out;
-} */
-
-/* Removido: Efeito de brilho ao passar o mouse para imagens de produto */
-/* .product-image-gradient-border:hover {
-    box-shadow: 0 0 20px rgba(253, 224, 71, 0.6),
-                0 0 20px rgba(245, 158, 11, 0.6),
-                0 0 20px rgba(217, 70, 239, 0.6),
-                0 0 20px rgba(236, 72, 153, 0.6);
-} */
-
-/* NOVO ESTILO: Contorno Gradiente para o Dropdown de Filtro quando ativo */
 #filter-dropdown.active-gradient {
-    border: 2px solid transparent; /* Remove a borda padrão */
+    border: 2px solid transparent; 
     background-image: linear-gradient(to right, #1f2937, #1f2937), linear-gradient(to right, #fde047, #f59e0b, #d946ef, #ec4899);
     background-origin: border-box;
     background-clip: padding-box, border-box;
-    /* Adiciona um brilho sutil para destacar */
     box-shadow: 0 0 10px rgba(253, 224, 71, 0.4);
     transition: all 0.3s ease-in-out;
+
 }
