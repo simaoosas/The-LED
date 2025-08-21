@@ -1,6 +1,4 @@
-/* --- ANIMAÇÕES CRIATIVAS --- */
 
-/* Animação de entrada para os cards */
 @keyframes fadeInSlideUp {
   from {
     opacity: 0;
@@ -12,21 +10,20 @@
   }
 }
 
-/* Aplica a animação aos itens de produto */
 .product-item {
-  /* Define a animação a ser usada */
+
   animation-name: fadeInSlideUp;
-  /* Duração da animação (um pouco mais rápida) */
+
   animation-duration: 0.7s;
-  /* Curva de aceleração para um efeito suave */
+
   animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  /* Garante que o estado final da animação seja mantido */
+ 
   animation-fill-mode: forwards;
-  /* Começa com os cards invisíveis antes da animação */
+
   opacity: 0;
 }
 
-/* Atraso escalonado mais sutil e rápido para um efeito cascata mais uniforme */
+
 .product-item:nth-child(1) {
   animation-delay: 0.07s;
 }
@@ -45,9 +42,7 @@
 .product-item:nth-child(6) {
   animation-delay: 0.42s;
 }
-/* Continue este padrão se houver mais cards */
 
-/* Efeito sutil de brilho no card ao passar o mouse */
 .card::before {
   content: '';
   position: absolute;
@@ -58,7 +53,6 @@
   border-radius: 0.75rem;
   background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.06), transparent 40%);
   opacity: 0;
-  /* Transição mais rápida para sincronizar com o hover do card */
   transition: opacity 0.3s ease-out;
 }
 
@@ -66,7 +60,6 @@
   opacity: 1;
 }
 
-/* Animação da Logo */
 @keyframes logo-move {
     0% { transform: translateX(0) rotate(0deg); }
     25% { transform: translateX(-5px) rotate(-5deg); }
@@ -75,7 +68,7 @@
     100% { transform: translateX(0) rotate(0deg); }
 }
 
-/* Classe que aplica a animação quando a logo é clicada ou a página é carregada */
 .logo-animated {
     animation: logo-move 0.8s ease-in-out;
 }
+
