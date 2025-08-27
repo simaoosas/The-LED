@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const dadosNucs = {
         labels: ['Reparados', 'Sem reparo'],
         datasets: [{
-            label: 'Status dos NUCs', data: [200, 29],
+            label: 'Status dos NUCs', data: [203, 34],
             backgroundColor: [paletaCores.secundaria, paletaCores.quaternaria],
             borderColor: [paletaBordas.secundaria, paletaBordas.quaternaria],
             borderWidth: 1, hoverOffset: 4
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     const dadosContadores = {
-        nucs: { semana: 40, mes: 132 },
+        nucs: { semana: 40, mes: 135 },
         totems: { semana: 3, mes: 3 },
         suporte: { semana: 8, mes: 12 }
     };
@@ -179,5 +179,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loadObjectives();
 });
+
 
 
