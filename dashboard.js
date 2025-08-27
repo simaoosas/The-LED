@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
         labels: ['Jul', 'Ago', 'Set', 'Out', 'Nov'],
         datasets: [{
             label: 'TBs Config. por Mês',
-            data: [15, 7, 0, 0, 0],
+            data: [15, 14, 0, 0, 0],
             backgroundColor: paletaCores.secundaria,
             borderColor: paletaBordas.secundaria,
             borderWidth: 1
@@ -179,6 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loadObjectives();
 });
+
 
 
 
