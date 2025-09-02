@@ -22,6 +22,7 @@
             box-shadow: 0 0 15px rgba(220, 38, 38, 0.4) !important;
         }
 
+        /* NOVO: Estilo para a barra de menu no estilo vidro */
         #nav-menu {
             background-color: rgba(11, 11, 15, 0.5); 
             border-right: 1px solid rgba(255, 255, 255, 0.1); 
@@ -34,7 +35,7 @@
             background-image: linear-gradient(90deg, #F59E0B, #EC4899);
             color: #ffffff;
             border-radius: 0.5rem;
-            border-left: none; 
+            border-left: none; /* Remover a borda esquerda para um visual mais limpo */
 
         }
         
@@ -46,6 +47,26 @@
 
         .nav-link-parent.active .chevron-icon {
             color: #fff;
+        }
+        
+        /* Estilos adicionais para o iframe do Power BI */
+        .powerbi-container {
+            width: 100%;
+            padding-top: 80%; /* Ajuste a proporção aqui para controlar a altura */
+            position: relative;
+            background-color: #020101; /* Cor de fundo escura */
+            border-radius: 0.5rem;
+            border: 0px solid #ffffff; /* Borda sutil */
+            overflow: hidden;
+        }
+
+        .powerbi-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
         }
     </style>
 </head>
@@ -103,79 +124,10 @@
                     <header class="text-center mb-10">
                     </header>
                     
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-                        
-                        <div class="chart-container">
-                            <div class="chart-wrapper">
-                                <canvas id="graficoNucs"></canvas>
-                            </div>
-                            <div class="mt-auto pt-4 text-center text-white">
-                                <h4 class="text-lg font-semibold mb-3 border-t border-gray-700 pt-3">Reparos Concluídos</h4>
-                                <div class="flex justify-around">
-                                    <div class="p-2">
-                                        <p class="text-sm text-gray-400">Esta Semana</p>
-                                        <p id="nuc-reparos-semana" class="text-2xl font-bold text-teal-400">0</p>
-                                    </div>
-                                    <div class="p-2">
-                                        <p class="text-sm text-gray-400">Este Mês</p>
-                                        <p id="nuc-reparos-mes" class="text-2xl font-bold text-indigo-400">0</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="chart-container">
-                            <div class="chart-wrapper">
-                                <canvas id="graficoTotems"></canvas>
-                            </div>
-                            <div class="mt-auto pt-4 text-center text-white">
-                                <h4 class="text-lg font-semibold mb-3 border-t border-gray-700 pt-3">Reparos Concluídos</h4>
-                                <div class="flex justify-around">
-                                    <div class="p-2">
-                                        <p class="text-sm text-gray-400">Esta Semana</p>
-                                        <p id="totem-reparos-semana" class="text-2xl font-bold text-teal-400">0</p>
-                                    </div>
-                                    <div class="p-2">
-                                        <p class="text-sm text-gray-400">Este Mês</p>
-                                        <p id="totem-reparos-mes" class="text-2xl font-bold text-indigo-400">0</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex flex-col gap-8">
-                            <div id="objetivos-container" class="bg-gray-800 bg-opacity-40 p-6 rounded-lg border border-gray-700 backdrop-blur-sm h-full flex flex-col">
-                                <h3 class="text-xl font-bold text-white text-center mb-4 lg:text-left">Objetivos Concluídos</h3>
-                                <ul id="lista-objetivos" class="text-sm text-gray-300 space-y-2 flex-grow">
-                                </ul>
-                                <button id="add-objetivo-btn" class="mt-4 text-xs bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors w-full sm:w-auto">
-                                    Adicionar Objetivo
-                                </button>
-                            </div>
-                            <div class="bg-gray-800 bg-opacity-40 p-6 rounded-lg border border-gray-700 backdrop-blur-sm">
-                                <canvas id="graficoTBsConfiguradas"></canvas>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flex justify-center mt-8">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full lg:w-2/3">
-                            <div class="chart-container" style="min-height: 350px; height: 350px;">
-                                <canvas id="graficoTBs"></canvas>
-                            </div>
-                            <div class="bg-gray-800 bg-opacity-40 p-6 rounded-lg border border-gray-700 backdrop-blur-sm text-white text-center flex flex-col justify-center" style="height: 350px;">
-                                 <h4 class="text-lg font-semibold mb-3">Suporte Prestado</h4>
-                                    <div class="flex justify-around">
-                                        <div class="p-2">
-                                            <p class="text-sm text-gray-400">Esta Semana</p>
-                                            <p id="suporte-semana" class="text-3xl font-bold text-teal-400">0</p>
-                                        </div>
-                                        <div class="p-2">
-                                            <p class="text-sm text-gray-400">Este Mês</p>
-                                            <p id="suporte-mes" class="text-3xl font-bold text-indigo-400">0</p>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="flex justify-center items-center w-full">
+                        <!-- Power BI Dashboard -->
+                        <div class="powerbi-container" style="padding-top: 80%;">
+                             <iframe title="Dashboard-dados_hardware" width="100%" height="100%" src="https://app.powerbi.com/view?r=eyJrIjoiNjNkODc3MzAtNjA3Zi00ZTdlLThjZjItNTUwZjE0YWIzODZjIiwidCI6Ijg2YzhmMDAxLTYzOTYtNDA5YS04MGQ5LWM4MGU0MDI2NzgzYyJ9" frameborder="0" allowFullScreen="true"></iframe>
                         </div>
                     </div>
 
@@ -793,5 +745,4 @@
 </script>
 
 </body>
-
 </html>
