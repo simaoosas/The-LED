@@ -104,7 +104,7 @@ const products = [
         recommendation: "Instalações fixa, ideal para telas mais largas ou com formatos customizados que demandam mais saídas.",
         technicalFileUrl: "pdfs/x4s.pdf" 
     },
-    { name: "Colorlight X4m", type: "processadora", category: "cat-4 cat-colorlight", imageSrc: "img/x4m.png", 
+    { name: "Colorlight X4m", type: "processadora", category: "cat-4 cat-colorlight", imageSrc: "img/X4m.png", 
         specs: [ 
             { label: "Sistema", value: "Colorlight" },
             { label: "Entradas", value: "2x HDMI 1.4, 1x DVI, 1x VGA, 1x CVBS, 1x USB" }, 
@@ -495,3 +495,4 @@ const products = [
 
 
 ];
+
