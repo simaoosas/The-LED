@@ -1,4 +1,4 @@
-/* Estilos para o Fluxograma de Implementação */
+
 .timeline-container {
     position: relative;
     max-width: 900px;
@@ -162,4 +162,5 @@
     .timeline-right {
         left: 0%;
     }
+
 }
